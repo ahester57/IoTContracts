@@ -59,7 +59,10 @@ contract IoTCoin {
      * @param _value the amount of IoTCoin
      */
     function transfer(address _to, uint256 _value) public {
+        require(balance[msg.sender] > _value);
+        uint256 prevBalance = balance[msg.sender];
         _transfer(msg.sender, _to, _value);
+        assert(balance[msg.sender] == prevBalance - _value);
     }
 
     /// Transfer IoTCoin to _to of amount _value
