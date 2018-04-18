@@ -1,5 +1,5 @@
-var Camera = artifacts.require("Camera");
+var IoTCamera = artifacts.require("IoTCamera");
 
 module.exports = function(deployer) {
-  deployer.deploy(Camera);
+  deployer.deploy(IoTCamera);
 };

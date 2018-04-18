@@ -85,7 +85,7 @@ contract IoTCoin {
         balance[_from] -= _value;
         balance[_to] += _value;
         // interaction
-        Transfer(_to, _value);
+        emit Transfer(_to, _value);
         // assertion
         assert(balance[_to] + balance[_from] == previousBalances);
     }
