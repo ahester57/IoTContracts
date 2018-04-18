@@ -17,4 +17,10 @@ contract('IoTCoin', function(accounts) {
             });
         });
     });
+    it("should get the edge server address", function() {
+        return instance.getEdgeServer.call().then(function(address) {
+            assert.ok("uh oh");
+            console.log(address);
+        });
+    });
 });

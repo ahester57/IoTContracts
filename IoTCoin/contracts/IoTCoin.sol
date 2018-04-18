@@ -15,6 +15,7 @@ contract IoTCoin {
     string public symbol = "ITCN";
     uint8 public decimals = 18;
     uint256 public totalSupply;
+    address public eS = 0x0;
 
     mapping (address => uint256) public balance;
 
@@ -32,6 +33,7 @@ contract IoTCoin {
         require(initialSupply >= 0);                  // The Check
         totalSupply = initialSupply * 10 ** uint256(decimals);
         balance[msg.sender] = totalSupply;            // The Effect
+        eS = msg.sender;
         //                                            // There is no interaction here
         assert(balance[msg.sender] == totalSupply);   // Be Assertive.
     }
@@ -47,9 +49,15 @@ contract IoTCoin {
         // We are not making any changes so no need to
         // require or assert because there are no changes being
         // made that may need to be reverted.
+        if (msg.sender != eS) 
+            require(_of != eS);
         return balance[_of];
     }
 
+    function getEdgeServer() public view returns (address) {
+        return eS;
+    }
+    
     /**
      * Transfer tokens
      *
@@ -90,5 +98,4 @@ contract IoTCoin {
         assert(balance[_to] + balance[_from] == previousBalances);
     }
 
-    
 }
