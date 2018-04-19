@@ -32,7 +32,7 @@ contract('IoTCamera', function(accounts) {
     it("should open the server", function() {
         return instance.openServer(accounts[1], 8080, {from: accounts[0]})
         .then(function(result) {
-                assert.ok(result)
+            assert.ok(result)
         });
     });
     it("should not be available", function() {
