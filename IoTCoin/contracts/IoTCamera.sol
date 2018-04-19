@@ -1,6 +1,6 @@
 pragma solidity ^0.4.0;
 
-import {IoTCoin} from "../../IoTCoin/contracts/IoTCoin.sol";
+import {IoTCoin} from "./IoTCoin.sol";
 
 
 /// @title IoTCamera
@@ -35,7 +35,7 @@ contract IoTCamera {//is IoTCoin {
         isAvailable = true;
         coinAddress = iotCoin;
         assert(isAvailable);   // Be Assertive.
-        assert(coinAddress == iotCoin);   // Be Assertive.
+        //assert(coinAddress == iotCoin);   // Be Assertive.
     }
 
     function isAvailable() public view returns (bool) {
@@ -46,7 +46,7 @@ contract IoTCamera {//is IoTCoin {
         address _to,
         uint8 _port
     ) public {
-        require(buyServer() > 0x0);
+        require(getServerAddress() > 0x0);
         emit OpenServer(msg.sender, _to, _port);
     } 
 
@@ -54,7 +54,7 @@ contract IoTCamera {//is IoTCoin {
         address _to,
         string _ip 
     ) public {
-        require(buyServer() > 0x0);
+        require(getServerAddress() > 0x0);
         emit OpenStream(msg.sender, _to, _ip);
     } 
 
@@ -64,11 +64,11 @@ contract IoTCamera {//is IoTCoin {
         assert(isAvailable);   // Be Assertive.
     }
 
-    function buyServer() public view returns (address) {
+    function getServerAddress() public view returns (address) {
         IoTCoin ic = IoTCoin(coinAddress);
-        uint256 bal = ic.getBalance(msg.sender);
+        //uint256 bal = ic.getBalance(msg.sender);
         address edge = ic.getEdgeServer();
         //ic.transfer(ic.getEdgeServer(), 10);
-        return coinAddress;
+        return edge;
     }
 }

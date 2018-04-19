@@ -10,11 +10,11 @@ contract('IoTCamera', function(accounts) {
             assert.equal(available.toString(), "true", "It's not available.");
         });
     });
-    it("should get balance of account", function() {
-        return instance.buyServer.call().then(function(balance) {
-            console.log(balance);
+     it("should get coinbase of edge server", function() {
+        return instance.getServerAddress.call().then(function(address) {
+            console.log(address);
             //assert.equal(available.toString(), "true", "It's not available.");
-            assert.equal(balance.toString(), "true", "Could not afford.");
+            assert.isAbove(address, 0, "Could not afford.");
         });
-    });
+    }); 
 });
