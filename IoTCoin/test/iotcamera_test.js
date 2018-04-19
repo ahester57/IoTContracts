@@ -41,4 +41,10 @@ contract('IoTCamera', function(accounts) {
             assert.equal(available.toString(), "false", "It's not available.");
         });
     });
+    it("should close the server", function() {
+        return instance.closeServer({from: accounts[0]})
+        .then(function(result) {
+            assert.ok(result)
+        });
+    });
 });

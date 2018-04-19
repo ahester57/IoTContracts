@@ -37,10 +37,11 @@ web3.eth.net.getId().then(function(networdId) {
 		.on('data', function(log) {
  			var info = log.returnValues;
 			var port = info._port;
+			var blockNum = log.blockNumber;
 
 			console.log(port);
+			console.log("blockNumber: ", blockNum);
 /* 			console.log("from: ", from);
-			console.log("blockNumber: ", blockNum) */
 /* 			exec('nc -l 2222', function(error, stdout, stderr) {
 				console.log("server open");
 				if (error) {
@@ -52,7 +53,7 @@ web3.eth.net.getId().then(function(networdId) {
 
 			var writable = fs.createWriteStream('file.txt');
 			var nc = new NetcatServer();
-			nc.port(2222).wait(5).listen().pipe(writable)
+			nc.port(2222).wait(5000).listen().pipe(writable)
 			.on('ready', function(error) {
 				console.log('ready');
 			})
@@ -79,7 +80,7 @@ web3.eth.net.getId().then(function(networdId) {
 			.on('close', function(error) {
 				console.log('close');
 				// close stream
-				camera.methods.closeStream().send({from: "0xb6c832cc0a7e368b79fba5de8fcd7edfa7367afb"})
+				camera.methods.closeServer().send({from: "0xb6c832cc0a7e368b79fba5de8fcd7edfa7367afb"})
 				.then(function(result) {
 					console.log("Connection closed.");
 					console.log("\nWaiting for event...");
