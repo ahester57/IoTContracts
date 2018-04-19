@@ -5,6 +5,7 @@ contract('IoTCoin', function(accounts) {
     IoTCoin.deployed().then(function(inst) {
         instance = inst;
     });
+    console.log("-Test\tIoTCoin: ", IoTCoin.address);
     it("should give creator insane amount of coins", function() {
         return instance.getBalance.call(accounts[0]).then(function(balance) {
             assert.ok("uh oh");

@@ -47,7 +47,10 @@ contract IoTCamera {//is IoTCoin {
         uint8 _port
     ) public {
         require(getServerAddress() > 0x0);
+        require(isAvailable);
+        isAvailable = false;
         emit OpenServer(msg.sender, _to, _port);
+        assert(!isAvailable);
     } 
 
     function openStream(
@@ -71,4 +74,9 @@ contract IoTCamera {//is IoTCoin {
         //ic.transfer(ic.getEdgeServer(), 10);
         return edge;
     }
+
+    function getCoinAddress() public view returns (address) {
+        return coinAddress;
+    }
+
 }
