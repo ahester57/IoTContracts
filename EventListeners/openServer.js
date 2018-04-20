@@ -8,16 +8,15 @@ const IoTCameraArtifact = require('./IoTCamera.json')
 const networkId = '2323'
 const provider = 'ws://localhost:35353'
 
-/* if (typeof web3 !== 'undefined')
+if (typeof web3 !== 'undefined')
 	var web3 = new Web3(web3.currentProvider);
-else */
+else 
 	var web3 = new Web3(new Web3.providers.WebsocketProvider(provider));
 
 
 web3.eth.net.getId().then(function(networdId) {
 		// get the contract instance
 		const address = IoTCameraArtifact.networks[networkId].address;
-		//var message = loadChainMessage();
 		const camera = new web3.eth.Contract(IoTCameraArtifact.abi, address);
 
 		// interact
@@ -37,25 +36,24 @@ web3.eth.net.getId().then(function(networdId) {
 		.on('data', function(log) {
  			var info = log.returnValues;
 			var port = info._port;
+			var deviceAddr = info._from;
+			var serverAddr = info._to;
 			var blockNum = log.blockNumber;
 
-			console.log(port);
+			console.log("device: ", deviceAddr);
+			console.log("port: ", port);
 			console.log("blockNumber: ", blockNum);
-/* 			console.log("from: ", from);
-/* 			exec('nc -l 2222', function(error, stdout, stderr) {
-				console.log("server open");
-				if (error) {
-					console.log(error);
-				} else {
-					console.log(stdout);
-				}
-			}); */
+
+			var readyTimer;
 
 			var writable = fs.createWriteStream('file.txt');
 			var nc = new NetcatServer();
 			nc.port(2222).wait(5000).listen().pipe(writable)
 			.on('ready', function(error) {
 				console.log('ready');
+				camera.methods.openStream(deviceAddr, "192.168.1.101").send({from: "0xb6c832cc0a7e368b79fba5de8fcd7edfa7367afb"})
+				
+				readyTimer = setTimeout(function(arg) { nc.close(); }, 9000, 'ready');
 			})
 			.on('data', function(error) {
 				//console.log("data received");
@@ -67,6 +65,7 @@ web3.eth.net.getId().then(function(networdId) {
 			})
 			.on('connection', function(error) {
 				console.log("connected");
+				clearTimeout(readyTimer);
 			})
 			.on('end', function(error) {
 				console.log('client disconnected');
@@ -94,17 +93,4 @@ web3.eth.net.getId().then(function(networdId) {
 
 }).catch(function(err) {
 	console.log(err);
-});
-
-
-//console.log(SentMessageEvent.watch())
-//console.log(message.events)
-
-// execute a child process
-exec('ls', function(error, stdout, stderr) {
-	if (error) {
-		console.log(error.code);
-	} else {
-		console.log(stdout);
-	}
 });
