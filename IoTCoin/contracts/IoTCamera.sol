@@ -20,6 +20,9 @@ contract IoTCamera {//is IoTCoin {
     event OpenServer(address indexed _from, address indexed _to,
                         uint16 _port);
 
+    // Event which Edge server is watching
+    event CloseServer(address indexed _from, uint16 _port);
+
     // Event which IoT device (pi) is watching after sending a request
     event OpenStream(address indexed _from, address indexed _to,
                         string _ip);
@@ -64,6 +67,7 @@ contract IoTCamera {//is IoTCoin {
     function closeServer() public {
         require(!isAvailable);
         isAvailable = true;
+        emit CloseServer(msg.sender, 2222);
         assert(isAvailable);   // Be Assertive.
     }
 
