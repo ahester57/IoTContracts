@@ -48,7 +48,7 @@ web3.eth.net.getId().then(function(networdId) {
 
 			var writable = fs.createWriteStream('file.txt');
 			var nc = new NetcatServer();
-			nc.port(2222).wait(5000).listen().pipe(writable)
+			nc.port(2222).wait(5000).listen().pipe(process.stdout)
 			.on('ready', function(error) {
 				console.log('ready');
 				camera.methods.openStream(deviceAddr, "192.168.1.101").send({from: "0xb6c832cc0a7e368b79fba5de8fcd7edfa7367afb"})
