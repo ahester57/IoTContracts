@@ -18,6 +18,12 @@ web3.eth.net.getId()
 	const camera = new web3.eth.Contract(IoTCameraArtifact.abi, address);
 
 	//console.log(camera);
+	var video = raspivid({
+		width:960,
+		height:800,
+		timeout:0
+	});
+	var ncClient = new NetcatClient();
 	
 	var streamEvent = camera.events['OpenStream']
 	(function(error, event) {
@@ -25,13 +31,14 @@ web3.eth.net.getId()
 	})
 	.on('data', function(log) {
 		console.log("The Server is open!");
-		var ncClient = new NetcatClient();
 
-		var video = raspivid({width:960,height:800});
 		video.pipe(ncClient.addr('192.168.1.101')
 			.port(2222).connect().stream());
 	})
 	.on('changed', function(log) {
+		//
+	})
+	.on('close', function(log) {
 		//
 	})
 	.on('error', function(log) {
