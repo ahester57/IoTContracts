@@ -25,6 +25,12 @@ function, which makes the contract available again.
 
 ### Prerequisites
 
-```npm install web3 ```
-```npm install netcat ```
-```npm install raspivid ```
+```npm install web3 ```  
+```npm install netcat ```  
+```npm install raspivid ```  
+
+### Bonus
+
+Pipe ```node openServer.js | mplayer -fps 30 -demuxer h264es -``` in order 
+to watch the live stream instead of watching a downpour of binary data on 
+the server.  
