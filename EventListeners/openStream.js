@@ -1,5 +1,6 @@
 const fs = require('fs');
 const NetcatClient = require('netcat/client');
+const raspivid = require('raspivid');
 var Web3 = require('web3');
 const IoTCameraArtifact = require('./IoTCamera.json');
 
@@ -24,6 +25,11 @@ web3.eth.net.getId()
 	})
 	.on('data', function(log) {
 		console.log("The Server is open!");
+		var ncClient = new NetcatClient();
+
+		var video = raspivid({width:960,height:800});
+		video.pipe(ncClient.addr('192.168.1.101')
+			.port(2222).connect().stream());
 	})
 	.on('changed', function(log) {
 		//
