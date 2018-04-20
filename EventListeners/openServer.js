@@ -45,10 +45,11 @@ web3.eth.net.getId().then(function(networdId) {
 			console.log("blockNumber: ", blockNum);
 
 			var readyTimer;
+			var activityTimer;
 
 			var writable = fs.createWriteStream('file.txt');
 			var nc = new NetcatServer();
-			nc.port(2222).wait(5000).listen().pipe(process.stdout)
+			nc.port(2222).wait(3000).k().listen().pipe(process.stdout)
 			.on('ready', function(error) {
 				console.log('ready');
 				camera.methods.openStream(deviceAddr, "192.168.1.101").send({from: "0xb6c832cc0a7e368b79fba5de8fcd7edfa7367afb"})
@@ -66,6 +67,7 @@ web3.eth.net.getId().then(function(networdId) {
 			.on('connection', function(error) {
 				console.log("connected");
 				clearTimeout(readyTimer);
+				activityTimer = setTimeout(function(arg) {nc.close(); }, 9000, 'active');
 			})
 			.on('end', function(error) {
 				console.log('client disconnected');
